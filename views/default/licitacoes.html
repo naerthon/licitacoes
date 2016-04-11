@@ -1,0 +1,14 @@
+{{extend 'layout.html'}}
+<h2>Cadastrar Novo</h2>
+
+<div class="table-responsive" >
+	{{=rows}}
+</div>
+
+
+<script>
+$(document).ready(function() {
+var valor = $("#div").html().replace("True", "sim").replace("False", "Não");
+$("#div").html(valor);
+}); 
+</script>

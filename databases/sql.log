@@ -1,0 +1,159 @@
+timestamp: 2016-04-06T12:59:31.670000
+CREATE TABLE auth_user(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name CHAR(128),
+    last_name CHAR(128),
+    email CHAR(512),
+    password CHAR(512),
+    registration_key CHAR(512),
+    reset_password_key CHAR(512),
+    registration_id CHAR(512)
+);
+success!
+timestamp: 2016-04-06T12:59:31.735000
+CREATE TABLE auth_group(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    role CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2016-04-06T12:59:31.811000
+CREATE TABLE auth_membership(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE
+);
+success!
+timestamp: 2016-04-06T12:59:31.894000
+CREATE TABLE auth_permission(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE,
+    name CHAR(512),
+    table_name CHAR(512),
+    record_id INTEGER
+);
+success!
+timestamp: 2016-04-06T12:59:31.983000
+CREATE TABLE auth_event(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    time_stamp TIMESTAMP,
+    client_ip CHAR(512),
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    origin CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2016-04-06T12:59:32.079000
+CREATE TABLE auth_cas(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    created_on TIMESTAMP,
+    service CHAR(512),
+    ticket CHAR(512),
+    renew CHAR(1)
+);
+success!
+timestamp: 2016-04-06T12:59:32.153000
+CREATE TABLE t_modalidade(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    f_tipo CHAR(512),
+    is_active CHAR(1),
+    created_on TIMESTAMP,
+    created_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    modified_on TIMESTAMP,
+    modified_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE
+);
+success!
+timestamp: 2016-04-06T12:59:32.228000
+CREATE TABLE t_modalidade_archive(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    f_tipo CHAR(512),
+    is_active CHAR(1),
+    created_on TIMESTAMP,
+    created_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    modified_on TIMESTAMP,
+    modified_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    current_record INTEGER REFERENCES t_modalidade (id) ON DELETE CASCADE
+);
+success!
+timestamp: 2016-04-06T12:59:32.321000
+CREATE TABLE t_anos(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    f_ano CHAR(512),
+    is_active CHAR(1),
+    created_on TIMESTAMP,
+    created_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    modified_on TIMESTAMP,
+    modified_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE
+);
+success!
+timestamp: 2016-04-06T12:59:32.394000
+CREATE TABLE t_anos_archive(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    f_ano CHAR(512),
+    is_active CHAR(1),
+    created_on TIMESTAMP,
+    created_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    modified_on TIMESTAMP,
+    modified_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    current_record INTEGER REFERENCES t_anos (id) ON DELETE CASCADE
+);
+success!
+timestamp: 2016-04-06T12:59:32.478000
+CREATE TABLE t_situacao(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    f_tipo CHAR(512),
+    is_active CHAR(1),
+    created_on TIMESTAMP,
+    created_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    modified_on TIMESTAMP,
+    modified_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE
+);
+success!
+timestamp: 2016-04-06T12:59:32.571000
+CREATE TABLE t_situacao_archive(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    f_tipo CHAR(512),
+    is_active CHAR(1),
+    created_on TIMESTAMP,
+    created_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    modified_on TIMESTAMP,
+    modified_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    current_record INTEGER REFERENCES t_situacao (id) ON DELETE CASCADE
+);
+success!
+timestamp: 2016-04-06T12:59:32.871000
+CREATE TABLE t_licitacoes(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    f_n_procedimento CHAR(512),
+    f_modalidade INTEGER REFERENCES t_modalidade (id) ON DELETE CASCADE,
+    f_anos INTEGER REFERENCES t_anos (id) ON DELETE CASCADE,
+    f_situacao INTEGER REFERENCES t_situacao (id) ON DELETE CASCADE,
+    is_active CHAR(1),
+    created_on TIMESTAMP,
+    created_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    modified_on TIMESTAMP,
+    modified_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE
+);
+success!
+timestamp: 2016-04-06T12:59:33.204000
+CREATE TABLE t_licitacoes_archive(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    f_n_procedimento CHAR(512),
+    f_modalidade INTEGER REFERENCES t_modalidade (id) ON DELETE CASCADE,
+    f_anos INTEGER REFERENCES t_anos (id) ON DELETE CASCADE,
+    f_situacao INTEGER REFERENCES t_situacao (id) ON DELETE CASCADE,
+    is_active CHAR(1),
+    created_on TIMESTAMP,
+    created_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    modified_on TIMESTAMP,
+    modified_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    current_record INTEGER REFERENCES t_licitacoes (id) ON DELETE CASCADE
+);
+success!
+timestamp: 2016-04-07T09:26:10.848000
+ALTER TABLE t_licitacoes ADD f_concluido CHAR(1);
+success!
+timestamp: 2016-04-07T09:26:10.944000
+ALTER TABLE t_licitacoes_archive ADD f_concluido CHAR(1);
+success!
